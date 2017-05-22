@@ -16,23 +16,41 @@
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-<div ng-controller="TodoController as $todoCtrl">
-    <input type="text" ng-model="taskName">
-    <button ng-click="$todoCtrl.addTask(taskName); taskName='';">Dodaj</button>
-    <ul style="margin: 0px; padding:0px;">
-        <li ng-repeat="task in $todoCtrl.tasks"  style="list-style-type: none; margin:0px; padding:10px 0px;">
-               <button style="width:80px;" ng-click="task.inEditMode = !task.inEditMode">{{ (task.inEditMode)? "Done": "Edit" }}</button>
-                <button style="width:80px;" ng-click="$todoCtrl.deleteTask(task)">Delete</button>
 
-                <span style="padding-left:20px;">
-                    <input  type="checkbox" ng-model="task.done" >
-                    <input type="text" ng-show="task.inEditMode;" ng-model="task.name" style="width: auto;">
-                    <span ng-class="{'text-success': task.done, 'text-danger': !task.done }" ng-hide="task.inEditMode">
-                        {{ task.name }}
-                </span>
-        </li>
-    </ul>
-</div>
+
+
+<form name="supportForm" ng-controller="SupportTicketController as $stCtrl" novalidate  style="width: 400px; margin-left:auto; margin-right:auto;" >
+    <label for="personName">Name:</label>
+    <input class="form-control" type="text" name="personName" ng-model="$stCtrl.ticket.personNameS" ng-required="true" ></input>
+    <p ng-if="supportForm.personName.$error.required && supportForm.personName.$dirty" class="text-danger">Required!</p>
+    
+    <label for="email">E-mail:</label>
+    <input class="form-control" type="email" name="email" ng-model="$stCtrl.ticket.emailS" ng-required="true" ></input>
+    <p ng-if="supportForm.email.$error.required && supportForm.email.$dirty" class="text-danger">Required!</p>
+    <p ng-if="supportForm.email.$error.email && supportForm.email.$dirty" class="text-danger">This should be an email.</p>
+
+
+    <label for="dateOfIssue">Date of incident: </label>
+    <input class="form-control" type="date" name="dateOfIssue" ng-model="$stCtrl.ticket.dateD" ng-required="true" ></input>
+    <p ng-if="supportForm.dateOfIssue.$error.required && supportForm.dateOfIssue.$dirty" class="text-danger" >Required! (YYYY-MM-DD)</p>
+    
+    <label for="problemType">Severity: </label>
+    <select class="form-control" name="problemType" id="problemType" ng-model="$stCtrl.ticket.severityE">
+        <option ng-value="problem.key" ng-repeat="problem in $stCtrl.problemType">{{ problem.name }}</option>
+    </select>
+    
+    <label for="description">Description: </label>
+    <textarea class="form-control" name="description" id="" cols="30" rows="10" ng-model="$stCtrl.ticket.descriptionS" ng-required="true" ></textarea>
+    <p ng-if="supportForm.description.$error.required && supportForm.description.$dirty" class="text-danger">Required!</p>
+    
+    <label for="agree">Do you agree with EULA:</label>
+    <input type="checkbox" name="agree" ng-model="$stCtrl.ticket.agreeB" ng-required="true"></input>
+    <p ng-if="supportForm.agree.$error.required && supportForm.agree.$dirty" class="text-danger">Required!</p>
+    <br / >
+    <button ng-disabled="!supportForm.$valid" class="btn btn-primary">Submit</button>
+    <br / >
+    {{ $stCtrl.ticket }}
+</form>
 
 <script src="js/bundle.js"></script>
 </body>

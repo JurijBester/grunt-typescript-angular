@@ -1,5 +1,6 @@
 import * as angular from 'angular'; 
-import {TodoController} from './app/Todo.Controller'; 
- 
+import {SupportTicketController} from './app/SupportTicketForm.Controller'; 
+
+
 const myApp = angular.module('comtrade', []) 
-     .controller('TodoController', TodoController); 
+     .controller('SupportTicketController', SupportTicketController);
